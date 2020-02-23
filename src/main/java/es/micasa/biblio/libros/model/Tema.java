@@ -1,4 +1,4 @@
-package es.micasa.biblio.model;
+package es.micasa.biblio.libros.model;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,7 +48,7 @@ public class Tema {
 	@JoinColumn(name="parent_id")
 	private Tema parentTema;
 	
-	@OneToMany(fetch=FetchType.EAGER,
+	@OneToMany(fetch=FetchType.LAZY,
 			mappedBy="tema",
 			   cascade= {CascadeType.PERSIST, CascadeType.MERGE,
 						 CascadeType.DETACH, CascadeType.REFRESH})
@@ -112,7 +112,7 @@ public class Tema {
 
 	@Override
 	public String toString() {
-		return "Tema [id=" + id + ", tema=" + tema + ", parentTema=" + parentTema + ", libros=" + libros + "]";
+		return "Tema [id=" + id + ", tema=" + tema + ", parentTema=" + parentTema + "]";
 	}
 	
 }

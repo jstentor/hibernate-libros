@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 
 public class TestJdbc {
 
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		String jdbcUrl = "jdbc:mysql://localhost:3306/libros?useSSL=false&serverTimezone=UTC";
 		String user = "hbstudent";

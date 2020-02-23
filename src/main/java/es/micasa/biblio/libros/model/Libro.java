@@ -1,16 +1,20 @@
-package es.micasa.biblio.model;
+package es.micasa.biblio.libros.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -80,14 +84,19 @@ public class Libro {
 	private Date updatedAt;
 	
 	// Relaciones
-	// Tema
+	// -> Tema
 	@ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, 
 			CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinColumn(name="tema_id")
 	private Tema tema;
 	
-		// Subtema
-		// Autor/es
+	// -> Autores
+	@ManyToMany(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
+			fetch=FetchType.LAZY)
+	@JoinTable(name="autores_libros",
+			joinColumns=@JoinColumn(name="libro_id"),
+			inverseJoinColumns=@JoinColumn(name="autor_id"))
+	private List<Autor> autores;
 		
 	public Libro() {}
 
@@ -233,6 +242,21 @@ public class Libro {
 
 	public void setTema(Tema tema) {
 		this.tema = tema;
+	}
+
+	public List<Autor> getAutores() {
+		return autores;
+	}
+
+	public void setAutores(List<Autor> autores) {
+		this.autores = autores;
+	}
+
+	public void add(Autor autor) {
+		if (autores == null) {
+			autores = new ArrayList<>();
+		}
+		autores.add(autor);
 	}
 
 	@Override

@@ -2,16 +2,18 @@ package es.micasa.biblio.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PostLoad;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -78,7 +80,12 @@ public class Libro {
 	private Date updatedAt;
 	
 	// Relaciones
-		// Tema
+	// Tema
+	@ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, 
+			CascadeType.PERSIST, CascadeType.REFRESH})
+	@JoinColumn(name="tema_id")
+	private Tema tema;
+	
 		// Subtema
 		// Autor/es
 		
@@ -220,10 +227,18 @@ public class Libro {
 		this.updatedAt = updatedAt;
 	}
 
+	public Tema getTema() {
+		return tema;
+	}
+
+	public void setTema(Tema tema) {
+		this.tema = tema;
+	}
+
 	@Override
 	public String toString() {
-		return "Libro [id=" + id + ", titulo=" + titulo + ", editorial=" + editorial + ", baja=" + baja + ", createdAt="
-				+ createdAt + ", updatedAt=" + updatedAt + "]";
+		return "Libro [id=" + id + ", titulo=" + titulo + ", editorial=" + editorial + ", baja=" + baja + ", Tema="
+				+ tema + "]";
 	}
 	
 			

@@ -2,11 +2,14 @@ package es.micasa.biblio.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -40,6 +43,10 @@ public class Autor {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="updated_at")
 	private Date updatedAt;
+	
+//	@OneToOne(cascade=CascadeType.ALL)
+//	@JoinColumn(name="instructor_detail_id")
+//	private InstructorDetail instructorDetail;
 	
 	@Transient
 	private String apeNom;
